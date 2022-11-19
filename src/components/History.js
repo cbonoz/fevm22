@@ -34,7 +34,11 @@ function History(props) {
     setLoading(true);
     try {
       const res = await getTransactions(chainId, address);
-      setData(res.data.data.messages);
+      const messages = res.data.data.messages
+      if (!messages) {
+        alert('No transactions found!')
+      }
+      setData(messages);
     } catch (e) {
       console.error(e);
       alert("error getting signdata" + e);

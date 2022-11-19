@@ -113,7 +113,7 @@ function UploadListing({network, account}) {
       <Row>
         <Col span={16}>
           <div className="create-form white boxed">
-            <h2>Create new data listing</h2>
+            {!result && <><h2>Create new data listing</h2>
             <a href="#" onClick={e => {
               e.preventDefault()
               setDemo()
@@ -180,10 +180,11 @@ function UploadListing({network, account}) {
             )}
             <br />
             <br />
+            </>}
             {error && <div className="error-text">Error: {error}</div>}
             {result && (<div>
               <Result status="success"
- title="Created datamarket request!"/>
+ title="Created datamarket request!" subTitle="Access your page and content below"/>
               <div>
                 <a href={ipfsUrl(result.cid)} target="_blank">
                   View files
@@ -192,6 +193,7 @@ function UploadListing({network, account}) {
                 <a href={result.contractUrl} target="_blank">
                   View created contract
                 </a>
+                <br />
                 <br />
                 <p>
                   Share or post this page with potential customers

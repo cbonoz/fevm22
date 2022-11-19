@@ -12,6 +12,8 @@ Datamarket is an open blockchain platform designed for creating Data sale pages 
 
 Decentralized exchanges, also known as DEXs, are peer-to-peer marketplaces where cryptocurrency traders make transactions directly without handing over management of their funds to an intermediary or custodian.
 
+<!--
+
 ### Motivation
 
 
@@ -130,7 +132,7 @@ Datamarket should now be running on port 3000.
 ### DataMarket history lookup
 <img src="./img/history.png" width=800 />
 
-
+-->
 
 <!--
 

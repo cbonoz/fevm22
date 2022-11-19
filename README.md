@@ -10,11 +10,9 @@ Datamarket
 
 Datamarket is an open blockchain platform designed for creating Data sale pages on the FEVM network. 
 
-This project was built for HackFEVM 2022 on ethglobal, and going after the Best use of FEVM to build building blocks such as DEXes, AMMs and more.
+This project was built for HackFEVM 2022 on ethglobal, submitted to the Best use of FEVM to build building blocks and general category.
 
-Demo url:
-
-
+<b>Note this project is currently a demo prototype and would require additional work to be production ready on FEVM mainnet.</b>
 
 <!--
 
@@ -30,18 +28,17 @@ Other common challenges that occur outside of platforms can include limitations 
 
 Users create data pages which are purchase pages for secured IPFS datasets.
 
-DataMarket is self-governing. If a bad or inaccurate dataset is uploaded and sold, a purchaser or potential purchaser can flag the dataset as being fraudulent. The dataset page is locked 
+DataMarket is self-governing. If a bad or inaccurate dataset is uploaded and sold, a purchaser or potential purchaser can flag the dataset as being fraudulent. The dataset page is locked after three flags.
 
-To ensure that the data provides user satisfaction, the user is only paid out from the contract after 3 non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the `purchaseData` contract method 
+To ensure that the data provides user satisfaction, the user is only paid out from the contract after three non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the `purchaseData` contract method 
 
 Each dataset cannot be modified after it is posted, but the price can be updated by the owner and it can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of existing pages.
 
 
 Using FEVM smart contracts, Datamarket can:
 1. Enable an immutable, append-only, history of interactions against DataMarket smartcontracts.
-2. 
-3. Store the data in a transparent way for all parties, where no single party has to be the custodian of the data log.
-4. Perform low cost, high volume, and fast transactions.
+2. Store the data in a scalable/low-cost way for data owners, where no single source has to be the custodian of the data log.
+3. Perform low cost, high volume, and fast transactions on the FEVM network.
 
 ### Technologies used
 
@@ -67,7 +64,6 @@ The following contract events are emitted and can be listened to externally.
 Define the following environment variables.
 
 <pre>
-    REACT_APP_COVALENT_KEY= // Your covalent API key (optional - needed from history tab)
     REACT_APP_STORAGE_KEY=  // Your web3.storage key, used for IPFS storage of datasets.
     REACT_APP_ACTIVE_CHAIN_ID= // (Optional) Can be adjusted to FEVM mainnet in the future, for now this field should be unset or set to 31415 for wallaby testnet.
     REACT_APP_WC_ID= // cloud.walletconnect.com app id (defaults to a demo app id).
@@ -77,8 +73,6 @@ Define the following environment variables.
 `yarn; yarn start`
 
 Datamarket should now be running on port 3000.
-
-<b>Note this project is currently a prototype and would require additional work to be production ready on FEVM mainnet.</b>
 
 ### Potential future work
 * Add a usage fee that takes a small percentage of each purchase. This could be easily added to the checkout flow - for now the purchases are completely free.
@@ -136,9 +130,7 @@ Datamarket should now be running on port 3000.
 <!--
 
 Demo flow:
-Web Article stating problem (flexport)
-- https://www.flexport.com/
-- https://www.bluecart.com/blog/common-shipping-issues
+Web Article stating problem
 Intro solution / website
 Connect wallet
 Create datamarket

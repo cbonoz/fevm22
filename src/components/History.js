@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Button, Input, Select, Table } from "antd";
 import { APP_NAME, CHAIN_OPTIONS, ACTIVE_CHAIN } from "../constants";
-import { getTransactions } from "../util/covalent";
-import { capitalize, col, formatDate } from "../util";
+import { getTransactions } from "../util/history";
+import { capitalize, col, formatDate, getExplorerUrl } from "../util";
 import logo from '../assets/logo_trans.png'
 
 const { Option } = Select;
@@ -11,18 +11,15 @@ const { Option } = Select;
 const COLUMNS = [
   //   col("tx_hash"),
   //   col("from_address"),
-  col("from_address"),
+  col("type", r => 'Purchase'),
+  col("from", r => r.robust),
   col("value"),
-  col("gas_spent"),
-  col(
-    "block_signed_at",
-    formatDate
-  ),
+  col("to",r => r.robust),
 ];
 
 function History(props) {
   const [address, setAddress] = useState(
-    "0xF7bA7656365459ed930B01AbB32417c437C6693c"
+    "0x446Df52b0BeA07443c8Bd890089a231485885cfC"
   );
   const [chainId, setChainId] = useState(ACTIVE_CHAIN.id);
   const [loading, setLoading] = useState();
@@ -37,7 +34,7 @@ function History(props) {
     setLoading(true);
     try {
       const res = await getTransactions(chainId, address);
-      setData(res.data.data.items);
+      setData(res.data.data.messages);
     } catch (e) {
       console.error(e);
       alert("error getting signdata" + e);
@@ -80,7 +77,7 @@ function History(props) {
       <hr />
       {data && (
         <div>
-          <h1>Transaction History</h1>
+          <h1>Message History</h1>
           <Table
             dataSource={data}
             columns={COLUMNS}
@@ -90,7 +87,7 @@ function History(props) {
                 onClick: (event) => {
                   console.log("event", event.target.value);
                   window.open(
-                    `${CHAIN_OPTIONS[chainId].url}tx/${record.tx_hash}`,
+                    getExplorerUrl(record.cid, true),
                     "_blank"
                   );
                 }, // click row

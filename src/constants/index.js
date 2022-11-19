@@ -13,15 +13,15 @@ export const EXAMPLE_FORM = {
     'description': 'This dataset contains 500 rows of names and phones that belong to business owners in the Boston area',
     'dataUrl': 'bafybeib2vuqadrzngsawjxpcysyq3u3z7pjzcpv2tl32d6vy5bqw6oi3x4',
     'keywords': 'business, phone numbers, contacts, boston, united states',
+    'createdAt': formatDate(),
     'priceEVM': 0.01,
     'files': []
 }
 
-export const EXAMPLE_RESPONSE = {
+export const getExampleResponse = () => ({
   ...EXAMPLE_FORM,
-  purchases: 4,
-  createdAt: formatDate()
-}
+  purchases: 0,
+})
 
 
 export const WEB3_PROJECT_ID = process.env.REACT_APP_WC_ID || 'ec17b7971a950170d6c5710eb878ba9b';

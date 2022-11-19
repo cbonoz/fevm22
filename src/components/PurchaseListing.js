@@ -1,12 +1,12 @@
 import { Web3Button } from '@web3modal/react'
 import {useSigner} from 'wagmi'
-import { Button, Result, Spin } from 'antd'
-import TextArea from 'antd/lib/input/TextArea'
+import { Button, Modal, Result, Spin } from 'antd'
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
-import { EXAMPLE_FORM, EXAMPLE_RESPONSE } from '../constants'
-import { getMetadata, purchaseDataset, recordDatasetEvent } from '../contract/dataContract'
-import { ipfsUrl } from '../util'
+import { getExampleResponse } from '../constants'
+import { flagDataset, getMetadata, purchaseDataset } from '../contract/dataContract'
+import { getExplorerUrl, ipfsUrl } from '../util'
+import TextArea from 'antd/lib/input/TextArea'
 
 export default function PurchaseListing({network, account}) {
   const { data: signer, error: signerError, isLoading, refetch } = useSigner()
@@ -15,18 +15,38 @@ export default function PurchaseListing({network, account}) {
   const [result, setResult] = useState()
   const [loading, setLoading] = useState(false)
   const [dataset, setDataset] = useState()
+  const [reason, setReason] = useState()
+  const [flagModal, setFlagModal] = useState(false)
 
   const params = useParams()
   const {contractAddress} = params
 
+  async function flag() {
+    setError('')
+    setLoading(true)
+    try {
+      const res = await flagDataset(signer, contractAddress, reason)
+      // const res = await flagDataset(signer, contractAddress, "tst")
+      console.log('res', res)
+      setResult({...res, dataUrl: dataset?.dataUrl})
+    } catch (e) {
+      setError(e.message)
+    } finally {
+      setLoading(false)
+      setFlagModal(false)
+    }
+  }
+
    async function purchase() {
     // TODO: add error check for preset location if user denied permission or location not retrievable.
     setLoading(true)
+    setError('')
     const {priceEVM} = dataset
     try {
       const res = await purchaseDataset(signer, contractAddress, priceEVM)
+      // const res = await flagDataset(signer, contractAddress, "tst")
       console.log('res', res)
-      setResult({...res})
+      setResult({...res, dataUrl: dataset?.dataUrl})
     } catch (e) {
       setError(e.message)
     } finally {
@@ -44,7 +64,7 @@ export default function PurchaseListing({network, account}) {
       console.error('error fetching record', e)
       let { message } = e
       // setError(humanError(message))
-      setDataset(EXAMPLE_RESPONSE)
+      setDataset(getExampleResponse())
     } finally {
       setLoading(false)
     }
@@ -76,13 +96,18 @@ export default function PurchaseListing({network, account}) {
         <h2>{dataset.title}</h2>
         <p>{dataset.description}</p>
         {dataset.createdAt && <p>Created: {dataset.createdAt}</p>}
-        {dataset.purchases && <p>Purchases: {dataset.purchases}</p>}
+        {/* {!isNaN(dataset.purchases) && <p>Purchases: {dataset.purchases}</p>} */}
         {dataset.priceEVM && <p>Price: {dataset.priceEVM} TFIL</p>}
 
 
       {isReady && !result && <Button type="primary" size="large" loading={loading} onClick={purchase}>
         Purchase dataset
       </Button>}
+
+      <p><a href="#" onClick={(e) => {
+        e.preventDefault()
+        setFlagModal(true)
+      }}>Flag Dataset</a></p>
 
       {!isReady && <div><Web3Button/></div>}
       <br/>
@@ -93,16 +118,29 @@ export default function PurchaseListing({network, account}) {
       <Button type="primary" key="console" onClick={() => {
         window.open(ipfsUrl(result.dataUrl), "_blank")
       }}>
-        Access dataset
+        Access dataset contents
       </Button>,
       <Button type="secondary" key="console" onClick={() => {
-        window.open(result.contractUrl, "_blank")
+        window.open(getExplorerUrl(result.hash, true), "_blank")
       }}>
         View transaction
       </Button>,
     ]}/>}
 
       </div>}
+
+      <Modal title={`Flag listing`} open={flagModal} onOk={flag} onCancel={() => setFlagModal(false)}>
+        <p>Flag this dataset if you know or believe the contents to be invalid</p>
+        <p>Your account address will be recorded.</p>
+        {dataset?.title && <p>Listing: {dataset.title}</p>}
+        <h5>Reason</h5>
+        <TextArea
+              aria-label="Flag Reason"
+              onChange={(e) => setReason(e.target.value)}
+              placeholder="Reason for flagging this listing"
+              value={reason}
+            />
+      </Modal>
 
     </div>
   )

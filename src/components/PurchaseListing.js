@@ -6,8 +6,7 @@ import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 import { EXAMPLE_FORM, EXAMPLE_RESPONSE } from '../constants'
 import { getMetadata, purchaseDataset, recordDatasetEvent } from '../contract/dataContract'
-import { humanError, ipfsUrl } from '../util'
-import { FileDrop } from './FileDrop/FileDrop'
+import { ipfsUrl } from '../util'
 
 export default function PurchaseListing({network, account}) {
   const { data: signer, error: signerError, isLoading, refetch } = useSigner()
@@ -23,9 +22,10 @@ export default function PurchaseListing({network, account}) {
    async function purchase() {
     // TODO: add error check for preset location if user denied permission or location not retrievable.
     setLoading(true)
-    const {priceWei} = dataset
+    const {priceEVM} = dataset
     try {
-      const res = await purchaseDataset(signer, contractAddress, priceWei)
+      const res = await purchaseDataset(signer, contractAddress, priceEVM)
+      console.log('res', res)
       setResult({...res})
     } catch (e) {
       setError(e.message)
@@ -60,13 +60,14 @@ export default function PurchaseListing({network, account}) {
     return <Spin size="large" className='boxed'/>
   }
 
-  if (error) {
+  const isReady = !loading && dataset?.priceEVM
+
+  if (error && !isReady) {
     return <div className='error-text boxed'>
       {error}
     </div>
   }
 
-  const isReady = !loading && dataset?.priceEth
 
   return (
     <div className='boxed'>
@@ -76,23 +77,29 @@ export default function PurchaseListing({network, account}) {
         <p>{dataset.description}</p>
         {dataset.createdAt && <p>Created: {dataset.createdAt}</p>}
         {dataset.purchases && <p>Purchases: {dataset.purchases}</p>}
-        {dataset.priceEth && <p>Price: {dataset.priceEth} Eth</p>}
+        {dataset.priceEVM && <p>Price: {dataset.priceEVM} TFIL</p>}
 
 
-      {isReady && <Button type="primary" size="large" loading={loading} onClick={purchase}>
+      {isReady && !result && <Button type="primary" size="large" loading={loading} onClick={purchase}>
         Purchase dataset
       </Button>}
 
       {!isReady && <div><Web3Button/></div>}
-      {result && <Result status="success" title="Event recorded!"
-      subTitle={`TX: ${result.hash}`}
+      <br/>
+      {error && <p className='error-text'>{error}</p>}
+      {result && <Result status="success" title="Dataset purchased!"
+      subTitle={"Use the link below to access your data"}
         extra={[
-          <p>{JSON.stringify(result)}</p>
-      // <Button type="primary" key="console" onClick={() => {
-      //   window.open(result.contractUrl, "_blank")
-      // }}>
-      //   View contract
-      // </Button>,
+      <Button type="primary" key="console" onClick={() => {
+        window.open(ipfsUrl(result.dataUrl), "_blank")
+      }}>
+        Access dataset
+      </Button>,
+      <Button type="secondary" key="console" onClick={() => {
+        window.open(result.contractUrl, "_blank")
+      }}>
+        View transaction
+      </Button>,
     ]}/>}
 
       </div>}

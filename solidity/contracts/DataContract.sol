@@ -1,13 +1,19 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 // This is the main building block for DataMarket smart contracts.
 contract DataContract {
+
+    // struct DataListing 
     string public name; // name of the data set files(s) for exchange
     string public description; // description of the data set file(s) for exchange
     string public createdAt; // created at timestmap for the contract
     uint256 public priceWei; // Current price (adjustable by owner)
     uint256 public purchases; // Number of successful purchases
+    string public keywords; // Keywords associated with dataset
+    string public size; // Size description
     address public owner; // Owner of the data listing
     bool public active; // Owner-controlled active status for the contract
     string private dataUrl; // Shared location of data assets
@@ -27,7 +33,9 @@ contract DataContract {
         string memory _description,
         string memory _dataUrl,
         uint256 _priceWei,
-        string memory _createdAt
+        string memory _createdAt,
+        string memory _keywords,
+        string memory _size
     ) {
         owner = msg.sender;
         name = _name;
@@ -35,7 +43,9 @@ contract DataContract {
         dataUrl = _dataUrl;
         priceWei = _priceWei;
         createdAt = _createdAt;
-
+        keywords = _keywords;
+        size = _size;
+        
         purchases = 0;
         active = true;
     }
@@ -89,13 +99,10 @@ contract DataContract {
         active = !active;
     }
 
-    function toString(uint256 v) private pure returns (string memory) {
-        return string(abi.encodePacked(v));
-    }
 
-    function toString(address v) private pure returns (string memory) {
-        return string(abi.encodePacked(v));
-    }
+     function getDescription() public view returns (string memory) {
+        return description;
+     }
 
     function getMetadataString() public view returns (string memory) {
         return
@@ -104,11 +111,13 @@ contract DataContract {
                 "|",
                 description,
                 "|",
-                toString(priceWei),
+                Strings.toString(priceWei),
                 "|",
-                toString(purchases),
+                Strings.toString(purchases),
                 "|",
-                toString(owner),
+                keywords,
+                "|",
+                size,
                 "|",
                 createdAt,
                 "|",

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Row, Col, Steps, Result } from "antd";
 import { datamarketUrl, ipfsUrl, getExplorerUrl, qrUrl, humanError, } from "../util";
-import { EXAMPLE_FORM } from "../constants";
+import { ACTIVE_CHAIN, APP_NAME, EXAMPLE_FORM } from "../constants";
 import { FileDrop } from "./FileDrop/FileDrop";
 import { uploadFiles } from "../util/stor";
 import { deployContract } from "../contract/dataContract";
@@ -21,18 +21,24 @@ function UploadListing({network, account}) {
     }
   }, [network, account])
 
-  const [data, setData] = useState({ ...EXAMPLE_FORM });
+  const [data, setData] = useState({});
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState();
+
+  const setDemo = () => setData({...EXAMPLE_FORM})
 
   const updateData = (key, value) => {
     setData({ ...data, [key]: value });
   };
 
   const getActiveError = (data) => {
-    if (!data.name) {
-      return "Please provide a name for the item.";
+    if (!data.title || !data.description || !data.priceEVM) {
+      return "Please provide a name, description, price for the item.";
+    }
+
+    if (!data.files || (data.files || []).length === 0) {
+      return "Must add at least one file";
     }
 
     return undefined
@@ -49,7 +55,7 @@ function UploadListing({network, account}) {
     }
 
     if (!signer) {
-      setError("Please connect a valid wallet");
+      setError(`Please connect a valid ${ACTIVE_CHAIN.name} wallet`);
       return;
     }
 
@@ -57,7 +63,7 @@ function UploadListing({network, account}) {
     const body = { ...data };
 
     // Format files for upload.
-    const files = body.files.map((x) => {
+    const files = (body.files || []).map((x) => {
       return x;
     });
 
@@ -65,13 +71,16 @@ function UploadListing({network, account}) {
 
     try {
       // 2) Upload files/metadata to ipfs.
-      const cid = await uploadFiles(
-        files,
-        res
-      );
+      let cid = '';
+      if (files && files.length > 0) {
+        cid = await uploadFiles(
+          files,
+          res
+        );
+      }
 
       // 3) return shareable url.
-      const contract = await deployContract(signer, data.name, data.description, cid, data.priceEth)
+      const contract = await deployContract(signer, data.title, data.description, cid, data.priceEVM, data.keywords)
       // 1) deploy base contract with metadata,
 
       res["datamarketUrl"] = datamarketUrl(contract.address);
@@ -104,19 +113,24 @@ function UploadListing({network, account}) {
       <Row>
         <Col span={16}>
           <div className="create-form white boxed">
-            <h2>Create new datamarket request</h2>
+            <h2>Create new data listing</h2>
+            <a href="#" onClick={e => {
+              e.preventDefault()
+              setDemo()
+            }}>Set demo values</a>
             <br />
 
-            <h3 className="vertical-margin">DataMarket request name:</h3>
+            <h3 className="vertical-margin">Listing information:</h3>
+            <h5>Name</h5>
             <Input
-              placeholder="Name of the datamarket request"
-              value={data.name}
-              prefix="Name:"
-              onChange={(e) => updateData("name", e.target.value)}
+              placeholder="Name of listing"
+              value={data.title}
+              onChange={(e) => updateData("title", e.target.value)}
             />
             <br/>
             <br/>
 
+            <h5>Description</h5>
             <TextArea
               aria-label="Description"
               onChange={(e) => updateData("description", e.target.value)}
@@ -124,11 +138,30 @@ function UploadListing({network, account}) {
               prefix="Description"
               value={data.description}
             />
+            <br/>
+            <br/>
+
+            <h5>Price ({ACTIVE_CHAIN.symbol})</h5>
+            <Input
+              placeholder="Purchase price"
+              value={data.priceEVM}
+              onChange={(e) => updateData("priceEVM", e.target.value)}
+            />
+            <br/>
+            <br/>
+
+            <h5>Keywords</h5>
+            <Input
+              placeholder={EXAMPLE_FORM.keywords}
+              value={data.keywords}
+              onChange={(e) => updateData("keywords", e.target.value)}
+            />
+
 
             {/* TODO: add configurable amount of items */}
             <h3 className="vertical-margin">Upload dataset(s) for purchaseable collection</h3>
             <FileDrop
-              files={data.files}
+              files={data.files || []}
               setFiles={(files) => updateData("files", files)}
             />
 
@@ -149,7 +182,7 @@ function UploadListing({network, account}) {
             <br />
             {error && <div className="error-text">Error: {error}</div>}
             {result && (<div>
-              <Result     status="success"
+              <Result status="success"
  title="Created datamarket request!"/>
               <div>
                 <a href={ipfsUrl(result.cid)} target="_blank">
@@ -183,12 +216,12 @@ function UploadListing({network, account}) {
             >
               <Step title="Fill in fields" description="Enter required data." />
               <Step
-                title="Create datamarket record"
-                description="Deploys a smart contract which will track the dataset"
+                title={`Create ${APP_NAME} listing`}
+                description="Deploys a smart contract and creates a purchase page for the dataset"
               />
               <Step
-                title="Use the generated QR code to track each unique dataset"
-                description="Others can view and provide updates here as the dataset moves"
+                title="Use the generated purchase page to sell your data"
+                description="Others can purchase the dataset from this url"
               />
             </Steps>
           </div>

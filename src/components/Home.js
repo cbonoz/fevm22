@@ -2,10 +2,12 @@ import React, {useState, } from 'react'
 import { Button,  Spin, Row, Col } from 'antd';
 import { APP_DESC} from '../constants';
 import { useNavigate } from 'react-router';
-import logo from './../assets/logo_trans.png'
 import { CheckCircleTwoTone } from '@ant-design/icons';
 
 const CHECKLIST_ITEMS = [
+  'Create instant hosted dataset sale pages managed by FEVM smart contracts',
+  'Payouts delivered after three successful sales',
+  'No email accounts or vendor agreements required',
 ];
 
 

@@ -10,14 +10,17 @@ Datamarket
 
 Datamarket is an open blockchain platform designed for creating Data sale pages on the FEVM network. 
 
-Decentralized exchanges, also known as DEXs, are peer-to-peer marketplaces where cryptocurrency traders make transactions directly without handing over management of their funds to an intermediary or custodian.
+This project was built for HackFEVM 2022 on ethglobal, and going after the Best use of FEVM to build building blocks such as DEXes, AMMs and more.
+
+Demo url:
+
+
 
 <!--
 
 ### Motivation
 
-
-Often excel spreadsheets that track the history of inventory and deliveries are shared via email.
+Decentralized exchanges, also known as DEXs, are peer-to-peer marketplaces where cryptocurrency traders make transactions directly without handing over management of their funds to an intermediary or custodian.
 
 For those vendors using existing software platforms (such as Flexport), much of the data is only held centrally within those platforms, subject to custom terms and conditions, and modifiable by their internal teams. Also often need to have a formal app B2B subscription plan.
 
@@ -27,23 +30,18 @@ Other common challenges that occur outside of platforms can include limitations 
 
 Users create data pages which are purchase pages for secured IPFS datasets.
 
-If a bad or inaccurate dataset is uploaded and sold, the 
+DataMarket is self-governing. If a bad or inaccurate dataset is uploaded and sold, a purchaser or potential purchaser can flag the dataset as being fraudulent. The dataset page is locked 
 
-To ensure that the data provides user satisfaction, the user is only paid out from the contract after 3 non-flagged successful sales, and each sale after that.
+To ensure that the data provides user satisfaction, the user is only paid out from the contract after 3 non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the `purchaseData` contract method 
 
-The dataset cannot be modified after it is posted, but can be marked as inactive. A new page should be created.
-
+Each dataset cannot be modified after it is posted, but the price can be updated by the owner and it can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of existing pages.
 
 
 Using FEVM smart contracts, Datamarket can:
-1. Enable an immutable, append-only, history of interactions with given datasets.
-2. Create a permission framework (optional) that enforces only certain wallets or user accounts can log events against a given item.
+1. Enable an immutable, append-only, history of interactions against DataMarket smartcontracts.
+2. 
 3. Store the data in a transparent way for all parties, where no single party has to be the custodian of the data log.
 4. Perform low cost, high volume, and fast transactions.
-
-Once delivered/completed, the owner of the dataset can call the `toggleActive` contract method - the contract will no longer be able to be updated, but the record will be preserved on the FEVM blockchain and IPFS.
-
-
 
 ### Technologies used
 
@@ -51,7 +49,9 @@ Once delivered/completed, the owner of the dataset can call the `toggleActive` c
 
 **IPFS**: Record keeping and storage. IPFS is used as the backend for the QR code scanning data lookup and enables uploading new images of the cargo at different checkpoints or if the status of the item has changed visibly during transit (ex: item experienced damage). Description uploaded are also saved to the contract.
 
-The following contract events are emitted:
+**WalletConnect**: Serves as the walletconnector for authorizing `DataMarket` contract deploys and enabling users to connect their wallets securely to the the DataMarket application.
+
+The following contract events are emitted and can be listened to externally.
 
 `PurchaseCompleted`: When a user completes the purchase on a data set page.
 `PageFlagged`: When a user flags a page as not having legitimate data.
@@ -59,9 +59,8 @@ The following contract events are emitted:
 
 ### Useful links
 * Hardhat: https://hardhat.org/tutorial/writing-and-compiling-contracts
-* Chainlink API parsing: https://docs.chain.link/docs/any-api/get-request/examples/api-array-response/
-* Hackathon: https://chainlinkfall2022.devpost.com/
-* Common supply chain / shipping problems: https://www.bluecart.com/blog/common-shipping-issues
+* Hackathon: https://ethglobal.com/events/hackfevm/home
+* Examples of existing distributed data exchanges.
 
 ### Running the app
 
@@ -69,8 +68,8 @@ Define the following environment variables.
 
 <pre>
     REACT_APP_COVALENT_KEY= // Your covalent API key (optional - needed from history tab)
-    REACT_APP_STORAGE_KEY=  // Your web3.storage key.
-    REACT_APP_ACTIVE_CHAIN_ID= // 80001 or 137 currently for fevm testnet or mainnet (defaults to testnet).
+    REACT_APP_STORAGE_KEY=  // Your web3.storage key, used for IPFS storage of datasets.
+    REACT_APP_ACTIVE_CHAIN_ID= // (Optional) Can be adjusted to FEVM mainnet in the future, for now this field should be unset or set to 31415 for wallaby testnet.
     REACT_APP_WC_ID= // cloud.walletconnect.com app id (defaults to a demo app id).
 </pre>
 
@@ -82,8 +81,8 @@ Datamarket should now be running on port 3000.
 <b>Note this project is currently a prototype and would require additional work to be production ready on FEVM mainnet.</b>
 
 ### Potential future work
-* Add subscription costs for creating different record types, auditing, and organization permissioning.
-* Enable data export of blockchain logs to more native or traditional formats such as excel or pdf.
+* Add a usage fee that takes a small percentage of each purchase. This could be easily added to the checkout flow - for now the purchases are completely free.
+* Add a searchable interface to discover datasets built into the `DataMarket` application.
 * Add support for user logins in addition to metamask (or wallet-based) logins.
 
 

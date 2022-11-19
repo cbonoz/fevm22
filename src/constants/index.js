@@ -12,7 +12,8 @@ export const EXAMPLE_FORM = {
     'title': 'Boston business phone number dataset',
     'description': 'This dataset contains 500 rows of names and phones that belong to business owners in the Boston area',
     'dataUrl': 'bafybeib2vuqadrzngsawjxpcysyq3u3z7pjzcpv2tl32d6vy5bqw6oi3x4',
-    'priceEth': 0.01,
+    'keywords': 'business, phone numbers, contacts, boston, united states',
+    'priceEVM': 0.01,
     'files': []
 }
 
@@ -28,6 +29,7 @@ export const WEB3_PROJECT_ID = process.env.REACT_APP_WC_ID || 'ec17b7971a950170d
 export const CHAIN_OPTIONS = {
     31415: {
       name: "Filecoin Wallaby",
+      symbol: "TFIL",
       url: "https://explorer.glif.io/",
       blockExplorers: ["https://explorer.glif.io/"],
       id: 31415,

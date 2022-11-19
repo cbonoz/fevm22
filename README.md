@@ -41,7 +41,7 @@ Using FEVM smart contracts, Datamarket can:
 
 **FEVM**: Serves as the primary smart contract network for the Datamarket application. FEVM enables fast and low cost smart contract transactions that make it easy to use Datamarket in the field without heavy additional costs or time delays. The deployed `DataContract` also enforces that the dataset be valid by enabling public users to flag suspicious listings.
 
-**IPFS**: Record keeping and storage. IPFS is used as the backend for the QR code scanning data lookup and enables uploading new images of the cargo at different checkpoints or if the status of the item has changed visibly during transit (ex: item experienced damage). Description uploaded are also saved to the contract.
+**IPFS**: Record keeping and storage. IPFS is used as the main backend for all uploaded datasets attached to DataContracts. The url of the asset is provided to the user post-purchase.
 
 **WalletConnect**: Serves as the walletconnector for authorizing `DataMarket` contract deploys and enabling users to connect their wallets securely to the the DataMarket application.
 
@@ -76,26 +76,55 @@ Datamarket should now be running on port 3000.
 * Add a searchable interface to discover datasets built into the `DataMarket` application.
 * Add support for user logins in addition to metamask (or wallet-based) logins.
 
+<!--
 ## Screenshots / User flow
 
 ### Home page
 
 <img src="./img/home.png" width=800 />
 
-### Home page
+### Connecting wallet
 
-<img src="./img/home.png" width=800 />
-
-
-### Home page
-
-<img src="./img/home.png" width=800 />
+<img src="./img/wallet.png" width=800 />
 
 
-### Home page
+### Creating a new data listing
 
-<img src="./img/home.png" width=800 />
+<img src="./img/confirm.png" width=800 />
 
+
+### Deployed
+
+<img src="./img/deployed.png" width=800 />
+
+
+### IPFS listing of a hosted asset
+
+<img src="./img/ipfs.png" width=800 />
+
+### Purchase page for a dataset
+
+<img src="./img/listing.png" width=800 />
+
+### Contract structure
+
+<img src="./img/code.png width=800 />
+
+### Contract history
+
+<img src="./img/history.png width=800 />
+
+
+### Deployed contract
+
+<img src="./img/contract.png width=800 />
+
+
+
+
+
+
+-->
 <!--
 
 Demo flow:

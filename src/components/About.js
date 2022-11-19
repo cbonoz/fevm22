@@ -11,21 +11,28 @@ const text = `
 ${APP_NAME}
 ---
 
-${APP_NAME} is a blockchain product tracking platform for any dataset.
-
-
 ### Motivation
 
+Decentralized exchanges, also known as DEXs, are peer-to-peer marketplaces where cryptocurrency traders make transactions directly without handing over management of their funds to an intermediary or custodian.
 
-For those vendors using existing software platforms (such as Flexport), much of the data is only held centrally within those platforms, subject to custom terms and conditions, and modifiable by their internal teams. Also often need to have a formal app B2B subscription plan.
+Existing data exchange platforms exist, like https://www.narrative.io/pricing, however either require long term commitments or having transactions mediated through a third party with high fees and staff overhead.
 
-Other common challenges that occur outside of platforms can include limitations from the non-universal nature of email (emails are private between sender and recipient), delays might not be accurately or consistently reported, and products might be lost.
+### How it works
+
+Users create data pages which are purchase pages for secured IPFS datasets.
+
+DataMarket is self-governing. If a bad or inaccurate dataset is uploaded and sold, a purchaser or potential purchaser can flag the dataset as being fraudulent. The dataset page is locked after three flags.
+
+To ensure that the data provides user satisfaction, the user is only paid out from the contract after three non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the purchaseData contract method 
+
+Each dataset cannot be modified after it is posted, but the price can be updated by the owner and it can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of existing pages.
+
 
 Using FEVM smart contracts, Datamarket can:
-1. Enable an immutable, append-only, history of purchases against a DataMarket smartcontract
-2. 
-3. 
-
+1. Enable an immutable, append-only, history of interactions against DataMarket smartcontracts.
+2. Store the data in a scalable/low-cost way for data owners, where no single source has to be the custodian of the data log.
+3. Perform low cost, high volume, and fast transactions on the FEVM network.
+4. Be self-governing by the user base and flag or shutdown any fraudulent pages by logic included in the FEVM smart contract.
 
 `
 
@@ -37,7 +44,7 @@ export const About = () => {
         <br/>
         <h1>About</h1>
         <ReactMarkdown>{text}</ReactMarkdown>
-        <a href="https://github.com/cbonoz/chainfa22" target="_blank">Github</a>
+        <a href="https://github.com/cbonoz/fevm22" target="_blank">Github</a>
         <p>
 
 </p>

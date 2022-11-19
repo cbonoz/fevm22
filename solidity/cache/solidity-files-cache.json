@@ -1,0 +1,40 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/Users/chrisbuonocore/personal/hackathons/fevm22/solidity/contracts/DataContract.sol": {
+      "lastModificationDate": 1668826328456,
+      "contentHash": "2a8a6b6a23e101911c5ba97860cdade3",
+      "sourceName": "contracts/DataContract.sol",
+      "solcConfig": {
+        "version": "0.8.17",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers",
+                "metadata"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.8.9"
+      ],
+      "artifacts": [
+        "DataContract"
+      ]
+    }
+  }
+}

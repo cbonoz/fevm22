@@ -75,10 +75,11 @@ Datamarket should now be running on port 3000.
 ### Potential future work
 * Add a usage fee that takes a small percentage of each purchase. This could be easily added to the checkout flow - for now the purchases are completely free.
 * Permanent data removal support from the filecoin network (uploaded sets remain live post-flagging currently).
-* Add a searchable interface to discover datasets built into the `DataMarket` application.
+* Add a searchable interface to discover datasets deployed via the `DataMarket` application.
+* Reporting on Purchase and Flag events emitted from data exchanges.
 * Add support for user logins in addition to metamask (or wallet-based) logins.
+* Migration from mocks to interfacing with production Filecoin storage deals.
 
-<!--
 ## Screenshots / User flow
 
 ### Home page
@@ -95,7 +96,7 @@ Datamarket should now be running on port 3000.
 <img src="./img/confirm.png" width=800 />
 
 
-### Deployed
+### Deployed listing
 
 <img src="./img/deployed.png" width=800 />
 
@@ -110,21 +111,17 @@ Datamarket should now be running on port 3000.
 
 ### Contract structure
 
-<img src="./img/code.png width=800 />
+<img src="./img/code.png" width=800 />
 
 ### Contract history
 
-<img src="./img/history.png width=800 />
+<img src="./img/history.png" width=800 />
 
 
 ### Deployed contract
 
-<img src="./img/contract.png width=800 />
+<img src="./img/contract.png" width=800 />
 
-
-
-
--->
 <!--
 
 Demo flow:

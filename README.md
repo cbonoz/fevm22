@@ -8,9 +8,9 @@
 Datamarket
 ---
 
-Datamarket is an open blockchain platform designed to enable anyone to create Data purchase or checkout pages on the FEVM network. 
+Datamarket is an open blockchain platform designed to enable anyone to create dataset purchase or checkout pages managed by the FEVM network. 
 
-This project was built for HackFEVM 2022 on ethglobal, submitted to the Best use of FEVM to build building blocks and general category.
+This project was built for HackFEVM 2022, targeting the best new use of FEVM to build building blocks such as digital exchanges.
 
 <b>Note this project is currently a demo prototype and would require additional work to be production ready on FEVM mainnet.</b>
 
@@ -18,7 +18,7 @@ This project was built for HackFEVM 2022 on ethglobal, submitted to the Best use
 
 Decentralized exchanges, also known as DEXs, are peer-to-peer marketplaces where cryptocurrency traders make transactions directly without handing over management of their funds to an intermediary or custodian.
 
-Existing data exchange platforms exist, like https://www.narrative.io/pricing, however either require long term commitments or having transactions mediated through a third party with high fees and staff overhead.
+Existing data exchange platforms exist, like https://www.narrative.io/pricing, however either require long term commitments or having transactions mediated through a third party with high fees and staff overhead. With a tight pairing to Filecoin and support for deal-making, FEVM has the ability to support such native exchanges without introducing other networks or external bridges to facilitate storage.
 
 ### How it works
 
@@ -26,9 +26,9 @@ Users create data pages which are purchase pages for secured IPFS datasets.
 
 DataMarket is self-governing. If a bad or inaccurate dataset is uploaded and sold, a purchaser or potential purchaser can flag the dataset as being fraudulent. The dataset page is locked after three flags.
 
-To ensure that the data provides user satisfaction, the user is only paid out from the contract after three non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the `purchaseData` contract method 
+To ensure that the data provides user satisfaction, the owner of the listing is only paid out from the contract after three non-flagged successful sales, and each sale after that. This is done automatically via logic tied to the `purchaseData` contract method which releases the funds on the contract after the third purchase.
 
-Each dataset cannot be modified after it is posted, but the price can be updated by the owner and it can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of existing pages.
+Each dataset cannot be modified after it is posted, but the price can be updated by the owner and the listing can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of data collections that have already been deployed.
 
 
 Using FEVM smart contracts, Datamarket can:
@@ -54,6 +54,7 @@ The following contract events are emitted and can be listened to externally.
 ### Useful links
 * Hardhat: https://hardhat.org/tutorial/writing-and-compiling-contracts
 * Hackathon: https://ethglobal.com/events/hackfevm/home
+* Example centralized data sharing platform: https://www.narrative.io/
 
 ### Running the app
 
@@ -118,8 +119,6 @@ Datamarket should now be running on port 3000.
 ### Deployed contract
 
 <img src="./img/contract.png width=800 />
-
-
 
 
 

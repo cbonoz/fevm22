@@ -20,6 +20,10 @@
   width: 500px;
 }
 
+.purchase-page .ant-card-head-title {
+  text-align: center;
+}
+
 .hero-section {
   margin-top: 150px;
 }

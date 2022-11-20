@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Input, Row, Col, Steps, Result } from "antd";
-import { datamarketUrl, ipfsUrl, getExplorerUrl, qrUrl, humanError, } from "../util";
-import { ACTIVE_CHAIN, APP_NAME, EXAMPLE_FORM } from "../constants";
+import { datamarketUrl, ipfsUrl, getExplorerUrl, humanError, } from "../util";
+import { ACTIVE_CHAIN, APP_NAME, EXAMPLE_FORM, updateForm } from "../constants";
 import { FileDrop } from "./FileDrop/FileDrop";
 import { uploadFiles } from "../util/stor";
 import { deployContract } from "../contract/dataContract";
@@ -84,12 +84,13 @@ function UploadListing({network, account}) {
       // 1) deploy base contract with metadata,
 
       res["datamarketUrl"] = datamarketUrl(contract.address);
-      res["cid"] = cid;
+      res["dataUrl"] = cid
       res["contract"] = contract.address;
       res["contractUrl"] = getExplorerUrl(contract.address);
 
       // Result rendered after successful doc upload + contract creation.
       setResult(res);
+      updateForm(res)
     } catch (e) {
       console.error("error creating datamarket request", e);
       const message = e.reason || e.response?.message || e.message
@@ -186,7 +187,7 @@ function UploadListing({network, account}) {
               <Result status="success"
  title="Created datamarket request!" subTitle="Access your page and content below"/>
               <div>
-                <a href={ipfsUrl(result.cid)} target="_blank">
+                <a href={ipfsUrl(result.dataUrl)} target="_blank">
                   View files
                 </a>
                 <br />

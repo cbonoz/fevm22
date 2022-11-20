@@ -1,4 +1,3 @@
-import { BigNumber } from "ethers";
 import { ACTIVE_CHAIN, IPFS_BASE_URL } from "../constants";
 
 export function addMinutes(numOfMinutes, date = new Date()) {
@@ -8,15 +7,12 @@ export function addMinutes(numOfMinutes, date = new Date()) {
 
 export const abbreviate = s => s ? `${s.substr(0, 6)}**` : ''
 
-
 export const formatDate = (d) => {
     if (!(d instanceof Date)) {
         d = d ? new Date(d) : new Date()
     }
     return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`
 }
-
-
 
 export const ipfsUrl = (cid, fileName) => {
     // let url = `https://ipfs.io/ipfs/${cid}`;

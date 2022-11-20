@@ -11,13 +11,14 @@ export const COVALENT_KEY = process.env.REACT_APP_COVALENT_KEY; // covalent api 
 export const EXAMPLE_FORM = {
     'title': 'Boston business phone number dataset',
     'description': 'This dataset contains 500 rows of names and phones that belong to business owners in the Boston area',
-    'dataUrl': 'bafybeib2vuqadrzngsawjxpcysyq3u3z7pjzcpv2tl32d6vy5bqw6oi3x4',
+    'dataUrl': 'bafybeiaznphofgf43tqmf6lttakxpe65ce3kqq2c6qs73lhjpcjdmpk2uq',
     'keywords': 'business, phone numbers, contacts, boston, united states',
     'createdAt': formatDate(),
     'priceEVM': 0.01,
     'files': []
 }
 
+export const updateForm = (f) => EXAMPLE_FORM = {...EXAMPLE_FORM, ...f}
 export const getExampleResponse = () => ({
   ...EXAMPLE_FORM,
   purchases: 0,

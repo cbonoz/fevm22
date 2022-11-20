@@ -1,6 +1,6 @@
 import { Web3Button } from '@web3modal/react'
 import {useSigner} from 'wagmi'
-import { Button, Modal, Result, Spin } from 'antd'
+import { Button, Card, Modal, Result, Spin } from 'antd'
 import React, {useState, useEffect} from 'react'
 import { useParams } from 'react-router'
 import { getExampleResponse } from '../constants'
@@ -90,19 +90,24 @@ export default function PurchaseListing({network, account}) {
 
 
   return (
-    <div className='boxed'>
+    <div className='boxed purchase-page'>
+      <Card title={        <span className='centered success-text'>Dataset available for purchase</span>}>
+
       {dataset && <div className='centered card boxed'>
-        <h4 className='centered success-text'>Dataset available for purchase</h4>
         <h2>{dataset.title}</h2>
         <p>{dataset.description}</p>
-        {dataset.createdAt && <p>Created: {dataset.createdAt}</p>}
+        {dataset.createdAt && <p>Listed at: {dataset.createdAt}</p>}
         {/* {!isNaN(dataset.purchases) && <p>Purchases: {dataset.purchases}</p>} */}
         {dataset.priceEVM && <p>Price: {dataset.priceEVM} TFIL</p>}
+
+        <p>Keywords: {dataset.keywords}</p>
+        <br/>
 
 
       {isReady && !result && <Button type="primary" size="large" loading={loading} onClick={purchase}>
         Purchase dataset
       </Button>}
+      <br/>
 
       <p><a href="#" onClick={(e) => {
         e.preventDefault()
@@ -129,15 +134,17 @@ export default function PurchaseListing({network, account}) {
 
       </div>}
 
+      </Card>
+
       <Modal title={`Flag listing`} open={flagModal} onOk={flag} onCancel={() => setFlagModal(false)}>
-        <p>Flag this dataset if you know or believe the contents to be invalid</p>
+        {dataset?.title && <p><b>Listing: {dataset.title}</b></p>}
+        <p>Flag this dataset if you know or believe the contents to be invalid.</p>
         <p>Your account address will be recorded.</p>
-        {dataset?.title && <p>Listing: {dataset.title}</p>}
         <h5>Reason</h5>
         <TextArea
               aria-label="Flag Reason"
               onChange={(e) => setReason(e.target.value)}
-              placeholder="Reason for flagging this listing"
+              placeholder="Your reason for flagging this listing"
               value={reason}
             />
       </Modal>

@@ -8,7 +8,7 @@
 Datamarket
 ---
 
-Datamarket is an open blockchain platform designed to enable anyone to create dataset purchase or checkout pages managed by the FEVM network. 
+Datamarket is an open blockchain platform designed to enable anyone to create data purchase or checkout pages managed on the FEVM network. 
 
 This project was built for HackFEVM 2022, targeting the best new use of FEVM to build building blocks such as digital exchanges.
 
@@ -30,25 +30,26 @@ To ensure that the data provides user satisfaction, the owner of the listing is 
 
 Each dataset cannot be modified after it is posted, but the price can be updated by the owner and the listing can be marked as inactive. A new page should be created if a dataset needs to be changed - this protects the mutability and trust of data collections that have already been deployed.
 
+Using FEVM smart contracts, DataMarket can:
 
-Using FEVM smart contracts, Datamarket can:
 1. Enable an immutable, append-only, history of interactions against DataMarket smartcontracts.
 2. Store the data in a scalable/low-cost way for data owners, where no single source has to be the custodian of the data log.
-3. Perform low cost, high volume, and fast transactions on the FEVM network.
-4. Be self-governing by the user base and flag or shutdown any fraudulent pages by logic included in the FEVM smart contract.
+3. Perform low-cost, high-volume, and fast transactions on the FEVM network.
+4. Be self-governing by the user base and flag or shut down any fraudulent pages by logic included in the FEVM smart contract.
 
 ### Technologies used
 
-**FEVM**: Serves as the primary smart contract network for the Datamarket application. FEVM enables fast and low cost smart contract transactions that make it easy to use Datamarket in the field without heavy additional costs or time delays. The deployed `DataContract` also enforces that the dataset be valid by enabling public users to flag suspicious listings.
+**FEVM**: Serves as the primary smart contract network for the DataMarket application. FEVM enables fast and low-cost smart contract transactions that make it to deploy and interact with contracts in the field without heavy additional costs or time delays. Deployed DataContracts also enforce that the datasets be valid by enabling public users to flag suspicious listings.
 
 **IPFS**: Record keeping and storage. IPFS is used as the main backend for all uploaded datasets attached to DataContracts. The url of the asset is provided to the user post-purchase.
 
-**WalletConnect**: Serves as the walletconnector for authorizing `DataMarket` contract deploys and enabling users to connect their wallets securely to the the DataMarket application.
+**WalletConnect**: Serves as the wallet connector for authorizing `DataMarket` contract deploys and enabling users to connect their wallets securely to the DataMarket application.
 
 The following contract events are emitted and can be listened to externally.
 
 `PurchaseCompleted`: When a user completes the purchase on a data set page.
 `PageFlagged`: When a user flags a page as not having legitimate data.
+
 
 
 ### Useful links
